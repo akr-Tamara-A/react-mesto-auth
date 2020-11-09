@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-// import "../components/App/App.";
+
+import Header from "../components/Header/Header";
 import Main from "../components/Main/Main";
+import Footer from "../components/Footer/Footer";
 import ImagePopup from "../components/Popups/ImagePopup";
 import PopupWithForm from "../components/Popups/PopupWithForm";
 import EditProfilePopup from "../components/Popups/EditProfilePopup";
 import EditAvatarPopup from "../components/Popups/EditAvatarPopup";
 import AddPlacePopup from "../components/Popups/AddPlacePopup";
+
 import { api } from "../utils/Api";
+
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 /** Основной компонент страницы */
@@ -163,6 +167,7 @@ function MainPage() {
   /** Основная разметка */
   return (
     <CurrentUserContext.Provider value={currentUser}>
+      <Header />
       <Main
         cards={cards}
         isCardsLoading={isCardsLoading}
@@ -185,6 +190,7 @@ function MainPage() {
           handleCardDelete(card);
         }}
       />
+      <Footer />
       <EditProfilePopup
         submitValue={submitButtonValues.editUserInfo}
         isOpen={isEditProfilePopupOpen}
