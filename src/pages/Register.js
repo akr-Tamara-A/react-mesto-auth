@@ -1,33 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import Header from "../components/Header/Header";
-
 import Footer from "../components/Footer/Footer";
-import { Link } from "react-router-dom";
 import Form from "../components/Form";
 import Input from "../components/Input/Input";
-import InfoTooltip from "../components/InfoTooltip";
+
+import * as auth from '../Auth.js';
 
 
 /** Страница авторизации пользователя */
-function Register() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(true);
+function Register(props) {
+  const history = useHistory();
+
   const [registerData, setRegisterData] = useState({
     email: '',
     password: '',
   });
 
-  const handleSubmit = (evt) => {
-    console.log('sign-in');
-    setIsOpen(true);
-    console.log(registerData);
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-  };
+    try {
+      const data = await auth.register(registerData.email, registerData.password);
 
-  const handleClose = () => {
-    setIsOpen(false);
-  }
+      if (data.error) {
+        props.isSuccess(false);
+        throw new Error (data.error);
+      } else {
+        props.isSuccess(true);
+        history.push('/sign-in');
+        setRegisterData({
+          email: '',
+          password: '',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      props.isSuccess(false);
+    }
+  };
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -56,7 +67,7 @@ function Register() {
             placeholder="E-mail"
             isRequired={true}
             theme="dark"
-            // value={description}
+            value={registerData.email}
             onChange={handleChange}
           />
           <Input
@@ -65,7 +76,7 @@ function Register() {
             placeholder="Пароль"
             isRequired={true}
             theme="dark"
-            // value={description}
+            value={registerData.password}
             onChange={handleChange}
           />
         </Form>
@@ -73,10 +84,8 @@ function Register() {
       </div>
 
       <Footer />
-      <InfoTooltip isOpen={isOpen} isSuccess={isSuccess} onClose={handleClose} />
     </>
   );
 }
 
 export default Register;
-
