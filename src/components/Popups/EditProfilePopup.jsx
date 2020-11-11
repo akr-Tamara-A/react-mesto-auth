@@ -2,6 +2,8 @@ import React, { useState, useContext, useCallback, useEffect } from 'react';
 import PopupWithForm from "../Popups/PopupWithForm";
 import Input from "../Input/Input";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import Popup from '../Popup';
+import Form from '../Form';
 
 
 /** Компонент "Попап редактирование профиля" */
@@ -36,34 +38,41 @@ export default function EditProfilePopup({onUpdateUser, ...props}) {
   }, [name, description, onUpdateUser]);
 
   return (
-    <PopupWithForm
-    name="editProfile"
-    title="Редактировать профиль"
-    submitValue="Сохранить"
-    {...props}
-    onSubmit={handleSubmit}
-  >
-    <Input
-      name="userName"
-      type="text"
-      minLength="2"
-      maxLength="40"
-      pattern="^[A-Za-zА-Яа-яЁё\s-]+$"
-      placeholder="Имя пользователя"
-      isRequired={true}
-      value={name}
-      onChange={handleOnChangeName}
-      />
-    <Input
-      name="userJob"
-      type="text"
-      minLength="2"
-      maxLength="200"
-      placeholder="О себе"
-      isRequired={true}
-      value={description}
-      onChange={handleOnChangeDescription}
-    />
-  </PopupWithForm>
-  )
+    <Popup 
+      name="editProfile" 
+      popupStyle="popup_style_form"
+      {...props}
+    >
+      <Form
+        title="Редактировать профиль"
+        submitValue="Сохранить"
+        formClass="popup"
+        onSubmit={handleSubmit}
+      >
+        <Input
+          name="userName"
+          theme="light"
+          type="text"
+          minLength="2"
+          maxLength="40"
+          pattern="^[A-Za-zА-Яа-яЁё\s-]+$"
+          placeholder="Имя пользователя"
+          isRequired={true}
+          value={name}
+          onChange={handleOnChangeName}
+        />
+        <Input
+          name="userJob"
+          theme="light"
+          type="text"
+          minLength="2"
+          maxLength="200"
+          placeholder="О себе"
+          isRequired={true}
+          value={description}
+          onChange={handleOnChangeDescription}
+        />
+      </Form>
+    </Popup>
+  );
 }
