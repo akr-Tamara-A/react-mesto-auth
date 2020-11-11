@@ -12,6 +12,7 @@ import AddPlacePopup from "../components/Popups/AddPlacePopup";
 import { api } from "../utils/Api";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Link } from "react-router-dom";
 
 /** Основной компонент страницы */
 function MainPage() {
@@ -167,7 +168,12 @@ function MainPage() {
   /** Основная разметка */
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header>
+        <div>
+          <span className="mail">some@email.com</span>
+          <Link to='/sign-in' className="link header__link">Выйти</Link>
+        </div>
+      </Header>
       <Main
         cards={cards}
         isCardsLoading={isCardsLoading}
