@@ -18,26 +18,46 @@ function Register(props) {
     password: '',
   });
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    try {
-      const data = await auth.register(registerData.email, registerData.password);
-
-      if (data.error) {
+    auth
+      .register(registerData.email, registerData.password)
+      .then((res) => {
+        if(res.data) {
+          props.isSuccess(true);
+          history.push("/signin");
+        } else {
+          props.isSuccess(false);
+          return Promise.reject(`Что-то пошло не так: ${res.error}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         props.isSuccess(false);
-        throw new Error (data.error);
-      } else {
-        props.isSuccess(true);
-        history.push('/sign-in');
-        setRegisterData({
-          email: '',
-          password: '',
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      props.isSuccess(false);
-    }
+      });
+
+
+
+
+    // try {
+    //   const data = await auth.register(registerData.email, registerData.password);
+
+    //   if (data.status === 400) {
+    //     console.log(data)
+    //     props.isSuccess(false);
+    //     throw new Error (data.error);
+    //   } else {
+    //     props.isSuccess(true);
+    //     history.push('/sign-in');
+    //     setRegisterData({
+    //       email: '',
+    //       password: '',
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   props.isSuccess(false);
+    // }
   };
 
   const handleChange = (e) => {
@@ -52,7 +72,7 @@ function Register(props) {
   return (
     <>
       <Header>
-        <Link to='/sign-in' className="link header__link">Войти</Link>
+        <Link to='/signin' className="link header__link">Войти</Link>
       </Header>
       <div className="content page__content">
         <Form
@@ -80,7 +100,7 @@ function Register(props) {
             onChange={handleChange}
           />
         </Form>
-        <Link className="link form__link" to="/sign-in">Уже зарегистрированы? Войти</Link>
+        <Link className="link form__link" to="/signin">Уже зарегистрированы? Войти</Link>
       </div>
 
       <Footer />

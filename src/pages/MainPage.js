@@ -171,7 +171,7 @@ function MainPage() {
       <Header>
         <div>
           <span className="mail">some@email.com</span>
-          <Link to='/sign-in' className="link header__link">Выйти</Link>
+          <Link to='/signin' className="link header__link">Выйти</Link>
         </div>
       </Header>
       <Main

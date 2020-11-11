@@ -33,7 +33,7 @@ function Login() {
   return (
     <>
       <Header>
-        <Link to='/sign-up' className="link header__link">Регистрация</Link>
+        <Link to='/signup' className="link header__link">Регистрация</Link>
       </Header>
       <div className="content page__content">
         <Form

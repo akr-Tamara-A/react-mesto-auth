@@ -30,12 +30,12 @@ function App() {
       <div className="page__container">
         <Switch>
           <ProtectedRoute loggedIn={loggedIn} path="/mesto-react" component={MainPage} />
-          <Route path="/sign-up" >
+          <Route path="/signup" >
             <Register isSuccess={handleOnSubmit} />
           </Route>
-          <Route path="/sign-in" component={Login} />
+          <Route path="/signin" component={Login} />
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/mesto-react" /> : <Redirect to="/sign-in" />}
+            {loggedIn ? <Redirect to="/mesto-react" /> : <Redirect to="/signin" />}
           </Route>
         </Switch>
       </div>
