@@ -10,9 +10,23 @@ import Input from "../components/Input/Input";
 
 /** Страница авторизации пользователя */
 function Login() {
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  });
+
   const handleSubmit = (evt) => {
     console.log('sign-in');
+    console.log(loginData);
     evt.preventDefault();
+  };
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
   };
 
   /** Основная разметка */
@@ -29,22 +43,20 @@ function Login() {
           formClass="page"
         >
           <Input
-            name="userEmail"
+            name="email"
             type="email"
             placeholder="E-mail"
             isRequired={true}
             theme="dark"
-            // value={description}
-            // onChange={handleOnChangeDescription}
+            onChange={handleChange}
           />
           <Input
-            name="userPassword"
+            name="password"
             type="password"
             placeholder="Пароль"
             isRequired={true}
             theme="dark"
-            // value={description}
-            // onChange={handleOnChangeDescription}
+            onChange={handleChange}
           />
         </Form>
       </div>

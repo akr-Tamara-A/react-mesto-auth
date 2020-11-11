@@ -8,7 +8,9 @@ const Input = forwardRef(({ name, isRequired, theme, ...rest }, ref) => {
       <input
         ref={ref}
         id={`input-${name}`}
+        name={name}
         required={isRequired}
+        autoComplete="true"
         {...rest}
         className={`popup__input popup__input_style_${theme}`}
       />

@@ -11,18 +11,31 @@ import InfoTooltip from "../components/InfoTooltip";
 
 /** Страница авторизации пользователя */
 function Register() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
+  const [registerData, setRegisterData] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = (evt) => {
     console.log('sign-in');
     setIsOpen(true);
+    console.log(registerData);
     evt.preventDefault();
   };
 
   const handleClose = () => {
     setIsOpen(false);
   }
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setRegisterData({
+      ...registerData,
+      [name]: value,
+    });
+  };
 
   /** Основная разметка */
   return (
@@ -38,22 +51,22 @@ function Register() {
           formClass="page"
         >
           <Input
-            name="userEmail"
+            name="email"
             type="email"
             placeholder="E-mail"
             isRequired={true}
             theme="dark"
             // value={description}
-            // onChange={handleOnChangeDescription}
+            onChange={handleChange}
           />
           <Input
-            name="userPassword"
+            name="password"
             type="password"
             placeholder="Пароль"
             isRequired={true}
             theme="dark"
             // value={description}
-            // onChange={handleOnChangeDescription}
+            onChange={handleChange}
           />
         </Form>
         <Link className="link form__link" to="/sign-in">Уже зарегистрированы? Войти</Link>
