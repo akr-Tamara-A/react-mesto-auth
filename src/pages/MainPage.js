@@ -12,10 +12,10 @@ import AddPlacePopup from "../components/Popups/AddPlacePopup";
 import { api } from "../utils/Api";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 /** Основной компонент страницы */
-function MainPage() {
+function MainPage(props) {
   const [currentUser, setCurrentUser] = useState({});
 
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -30,6 +30,13 @@ function MainPage() {
     addCards: 'Сохранить',
     confirmDeletion: 'Да',
   });
+
+  const history = useHistory();
+
+  const signOut = () => {
+    localStorage.removeItem('jwt');
+    history.push('/signin');
+  }
 
   useEffect(() => {
     /** Загрузка данных текущего пользователя с сервера */
@@ -170,8 +177,8 @@ function MainPage() {
     <CurrentUserContext.Provider value={currentUser}>
       <Header>
         <div>
-          <span className="mail">some@email.com</span>
-          <Link to='/signin' className="link header__link">Выйти</Link>
+          <span className="mail">{props.userData.email}</span>
+          <button className="link header__link" onClick={signOut}>Выйти</button>
         </div>
       </Header>
       <Main

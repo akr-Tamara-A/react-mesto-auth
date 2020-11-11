@@ -20,6 +20,9 @@ function Register(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    if (!registerData.email || !registerData.password) {
+      return;
+    };
     auth
       .register(registerData.email, registerData.password)
       .then((res) => {
@@ -35,29 +38,6 @@ function Register(props) {
         console.log(err);
         props.isSuccess(false);
       });
-
-
-
-
-    // try {
-    //   const data = await auth.register(registerData.email, registerData.password);
-
-    //   if (data.status === 400) {
-    //     console.log(data)
-    //     props.isSuccess(false);
-    //     throw new Error (data.error);
-    //   } else {
-    //     props.isSuccess(true);
-    //     history.push('/sign-in');
-    //     setRegisterData({
-    //       email: '',
-    //       password: '',
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   props.isSuccess(false);
-    // }
   };
 
   const handleChange = (e) => {

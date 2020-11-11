@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 import Header from "../components/Header/Header";
-
 import Footer from "../components/Footer/Footer";
-import { Link } from "react-router-dom";
 import Form from "../components/Form";
 import Input from "../components/Input/Input";
 
+import * as auth from '../Auth.js';
+
 
 /** Страница авторизации пользователя */
-function Login() {
+function Login(props) {
+  const history = useHistory();
+
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
   const handleSubmit = (evt) => {
-    console.log('sign-in');
     console.log(loginData);
     evt.preventDefault();
+    if (!loginData.email || !loginData.password) {
+      return;
+    }
+    auth
+      .authorize(loginData.email, loginData.password)
+      .then((res) => {
+        console.log(res);
+        if (res.token) {
+          props.handleLogin();
+          // history.push("/mesto-react");
+        } else {
+          return Promise.reject(`Что-то пошло не так: ${res.error}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleChange = (e) => {
