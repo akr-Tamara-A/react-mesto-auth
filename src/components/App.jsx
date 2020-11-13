@@ -33,7 +33,7 @@ function App() {
         .then((res) => {
           setUserData(res.data);
           setLoggedIn(true);
-          history.push("/mesto");
+          history.push("/cards");
         })
         .catch((err) => {
           console.log(err);
@@ -68,7 +68,7 @@ function App() {
     <>
       <div className="page__container">
         <Switch>
-          <ProtectedRoute loggedIn={loggedIn} path="/mesto">
+          <ProtectedRoute loggedIn={loggedIn} path="/cards">
             <MainPage userData={userData} onSignOut={onSignOut} />
           </ProtectedRoute>
           <Route path="/signup" >
@@ -78,7 +78,7 @@ function App() {
             <Login onLogin={onLogin} />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/mesto" /> : <Redirect to="/signin" />}
+            {loggedIn ? <Redirect to="/cards" /> : <Redirect to="/signin" />}
           </Route>
           <Route path="*">
             <Redirect to="/" />
