@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
-import MainPage from "../../pages/MainPage";
-import Register from "../../pages/Register";
-import Login from "../../pages/Login";
-import ProtectedRoute from "../../hocs/ProtectedRoute";
-import InfoTooltip from "../InfoTooltip";
+import MainPage from "../pages/MainPage";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
+import ProtectedRoute from "../hocs/ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
-import * as auth from '../../Auth.js';
+import * as auth from '../Auth.js';
 
 /** Основной компонент страницы */
 function App() {
@@ -18,19 +18,22 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [userData, setUserData] = useState({});
 
+  /** Проверка токена при монтировании */
   useEffect(() => {
     tokenCheck();
   }, []);
 
+  /** Проверка токена */
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
+      console.log(43);
       auth
         .checkToken(jwt)
         .then((res) => {
           setUserData(res.data);
           setLoggedIn(true);
-          history.push("/mesto-react");
+          history.push("/mesto");
         })
         .catch((err) => {
           console.log(err);
@@ -38,36 +41,48 @@ function App() {
     }
   };
 
-  const handleLogin = () => {
+  /** Авторизация */
+  const onLogin = () => {
     tokenCheck();
   }
 
+  /** Закрытие попапа */
   const handleClose = () => {
     setIsOpen(false);
   }
 
-  const handleOnSubmit = (booleen) => {
+  /** Регистрация */
+  const onRegister = (booleen) => {
     setIsOpen(true);
     setIsSuccess(booleen);
   };
+
+  /** Выход из аккаунта */
+  const onSignOut = () => {
+    localStorage.removeItem('jwt');
+    history.push('/signin');
+  }
 
   /** Основная разметка */
   return (
     <>
       <div className="page__container">
         <Switch>
-          <ProtectedRoute loggedIn={loggedIn} path="/mesto-react">
-            <MainPage userData={userData} />
+          <ProtectedRoute loggedIn={loggedIn} path="/mesto">
+            <MainPage userData={userData} onSignOut={onSignOut} />
           </ProtectedRoute>
           <Route path="/signup" >
-            <Register isSuccess={handleOnSubmit} />
+            <Register onRegister={onRegister} />
           </Route>
           <Route path="/signin">
-            <Login handleLogin={handleLogin} />
+            <Login onLogin={onLogin} />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/mesto-react" /> : <Redirect to="/signin" />}
+            {loggedIn ? <Redirect to="/mesto" /> : <Redirect to="/signin" />}
           </Route>
+          <Route path="*">
+            <Redirect to="/" />
+          </Route>          
         </Switch>
       </div>
       <InfoTooltip isOpen={isOpen} isSuccess={isSuccess} onClose={handleClose} />

@@ -1,8 +1,8 @@
 import React, { useCallback, createRef } from "react";
-import PopupWithForm from "../Popups/PopupWithForm";
-import Input from "../Input/Input";
-import Popup from "../Popup";
-import Form from "../Form";
+
+import Popup from "./Popup";
+import Form from "./Form";
+import Input from "./Input";
 
 export default function EditAvatarPopup({ onUpdateAvatar, ...props }) {
   const inputRef = createRef();

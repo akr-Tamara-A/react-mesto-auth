@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Form from "../components/Form";
-import Input from "../components/Input/Input";
+import Input from "../components/Input";
 
 import * as auth from '../Auth.js';
 
 
 /** Страница авторизации пользователя */
 function Login(props) {
-  const history = useHistory();
-
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
 
+  /** Обработка сабмита авторизации */
   const handleSubmit = (evt) => {
-    console.log(loginData);
     evt.preventDefault();
     if (!loginData.email || !loginData.password) {
       return;
@@ -27,12 +25,11 @@ function Login(props) {
     auth
       .authorize(loginData.email, loginData.password)
       .then((res) => {
-        console.log(res);
         if (res.token) {
-          props.handleLogin();
-          // history.push("/mesto-react");
+          localStorage.setItem('jwt', res.token);
+          props.onLogin();
         } else {
-          return Promise.reject(`Что-то пошло не так: ${res.error}`);
+          return Promise.reject(res);
         }
       })
       .catch((err) => {
@@ -40,6 +37,7 @@ function Login(props) {
       });
   };
 
+  /** Получение данных из инпутов */
   const handleChange = (e) => {
     const {name, value} = e.target;
     setLoginData({

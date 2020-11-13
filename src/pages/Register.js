@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Form from "../components/Form";
-import Input from "../components/Input/Input";
+import Input from "../components/Input";
 
 import * as auth from '../Auth.js';
 
@@ -18,6 +18,7 @@ function Register(props) {
     password: '',
   });
 
+  /** Обработка сабмита регистрации */
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!registerData.email || !registerData.password) {
@@ -27,19 +28,19 @@ function Register(props) {
       .register(registerData.email, registerData.password)
       .then((res) => {
         if(res.data) {
-          props.isSuccess(true);
+          props.onRegister(true);
           history.push("/signin");
         } else {
-          props.isSuccess(false);
-          return Promise.reject(`Что-то пошло не так: ${res.error}`);
+          return Promise.reject(res);
         }
       })
       .catch((err) => {
+        props.onRegister(false);
         console.log(err);
-        props.isSuccess(false);
       });
   };
 
+  /** Получение данных из инпутов */
   const handleChange = (e) => {
     const {name, value} = e.target;
     setRegisterData({

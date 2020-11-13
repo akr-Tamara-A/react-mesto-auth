@@ -1,9 +1,10 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
-import PopupWithForm from "../Popups/PopupWithForm";
-import Input from "../Input/Input";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import Popup from '../Popup';
-import Form from '../Form';
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+import Popup from './Popup';
+import Form from './Form';
+import Input from "./Input";
 
 
 /** Компонент "Попап редактирование профиля" */
@@ -19,7 +20,6 @@ export default function EditProfilePopup({onUpdateUser, ...props}) {
       setDescription(currentUser.about || '');
     }
   }, [currentUser]);
-
 
   const handleOnChangeName = useCallback(evt => {
     setName(evt.target.value);

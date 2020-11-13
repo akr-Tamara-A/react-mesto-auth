@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import Header from "../components/Header/Header";
-import Main from "../components/Main/Main";
-import Footer from "../components/Footer/Footer";
-import ImagePopup from "../components/Popups/ImagePopup";
-import PopupWithForm from "../components/Popups/PopupWithForm";
-import EditProfilePopup from "../components/Popups/EditProfilePopup";
-import EditAvatarPopup from "../components/Popups/EditAvatarPopup";
-import AddPlacePopup from "../components/Popups/AddPlacePopup";
+import Header from "../components/Header";
+import Main from "../components/Main";
+import Footer from "../components/Footer";
+import ImagePopup from "../components/ImagePopup";
+import PopupWithForm from "../components/PopupWithForm";
+import EditProfilePopup from "../components/EditProfilePopup";
+import EditAvatarPopup from "../components/EditAvatarPopup";
+import AddPlacePopup from "../components/AddPlacePopup";
 
 import { api } from "../utils/Api";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { useHistory } from "react-router-dom";
 
 /** Основной компонент страницы */
 function MainPage(props) {
@@ -31,11 +30,9 @@ function MainPage(props) {
     confirmDeletion: 'Да',
   });
 
-  const history = useHistory();
-
+  /** Обработка выхода из аккаунта */
   const signOut = () => {
-    localStorage.removeItem('jwt');
-    history.push('/signin');
+    props.onSignOut();
   }
 
   useEffect(() => {
@@ -94,7 +91,6 @@ function MainPage(props) {
       console.log('card deleted');
     })
   }
-
 
   /** Функция обработки клика по карточке */
   const handleCardClick = card => {
@@ -224,8 +220,6 @@ function MainPage(props) {
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       <PopupWithForm
-        name="deleteCard"
-        title="Вы уверены?"
         submitValue={submitButtonValues.confirmDeletion}
         isOpen={false}
         onClose={closeAllPopups}

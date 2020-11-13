@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import Card from "../Card/Card";
-import Spinner from "../Spinner/Spinner";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Card from "./Card";
+import Spinner from "./Spinner";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 /** Компонент "Контент страницы" */
 export default function Main(props) {

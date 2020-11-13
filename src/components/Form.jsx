@@ -9,7 +9,7 @@ export default function Form(props) {
     <form
       action="#"
       name={props.name}
-      // noValidate
+      noValidate
       onSubmit={props.onSubmit}
       className={`form form_style_${props.formClass}`}
     >
