@@ -3,7 +3,7 @@
 #### Проект 4: Mesto Russia (Create React App)
 # Сервис Mesto
 ##### Проект сервиса для [Яндекс Практикума](https://praktikum.yandex.ru/)
-##### [Ссылка на проект](https://akr-tamara-a.github.io//akr-Tamara-A/mesto-react)
+##### [Ссылка на проект](https://akr-tamara-a.github.io/react-mesto-auth/)
 ***
 ***
 
