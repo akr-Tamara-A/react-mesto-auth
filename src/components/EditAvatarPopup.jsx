@@ -4,7 +4,7 @@ import Popup from "./Popup";
 import Form from "./Form";
 import Input from "./Input";
 
-export default function EditAvatarPopup({ onUpdateAvatar, ...props }) {
+export default function EditAvatarPopup({ onUpdateAvatar, submitValue, ...props }) {
   const inputRef = createRef();
 
   const handleSubmit = useCallback(
@@ -23,7 +23,7 @@ export default function EditAvatarPopup({ onUpdateAvatar, ...props }) {
       >
       <Form
         title="Обновить аватар" 
-        submitValue="Сохранить"
+        submitValue={submitValue}
         formClass="popup"
         onSubmit={handleSubmit}
       >

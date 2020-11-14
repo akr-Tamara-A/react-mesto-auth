@@ -8,7 +8,7 @@ import Input from "./Input";
 
 
 /** Компонент "Попап редактирование профиля" */
-export default function EditProfilePopup({onUpdateUser, ...props}) {
+export default function EditProfilePopup({onUpdateUser, submitValue, ...props}) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
@@ -45,7 +45,7 @@ export default function EditProfilePopup({onUpdateUser, ...props}) {
     >
       <Form
         title="Редактировать профиль"
-        submitValue="Сохранить"
+        submitValue={submitValue}
         formClass="popup"
         onSubmit={handleSubmit}
       >

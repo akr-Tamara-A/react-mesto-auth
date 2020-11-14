@@ -28,9 +28,9 @@ function MainPage(props) {
   const [isCardsLoading, setCardsIsLoading] = useState(true);
   const [submitButtonValues, setSubmitButtonValues] = useState({
     editAvatar: 'Сохранить',
-    editUserInfo: 'Сохранить',
-    addCards: 'Сохранить',
-    confirmDeletion: 'Да',
+    editProfile: 'Сохранить',
+    addPlace: 'Сохранить',
+    deletePlace: 'Да',
   });
 
   /** Обработка выхода из аккаунта */
@@ -99,6 +99,10 @@ function MainPage(props) {
 
   /** Обработка удаления карточки */
   const handleCardDelete = () => {
+    setSubmitButtonValues({
+      ...submitButtonValues, 
+      deletePlace: 'Удаление...',
+    })
     const currentCard = selectedCard;
     api.deleteCard(currentCard._id)
     .then((res) => {
@@ -111,7 +115,13 @@ function MainPage(props) {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => {
+      setSubmitButtonValues({
+        ...submitButtonValues, 
+        deletePlace: 'Да',
+      })
+    })
   }
 
   /** Функция обработки клика по карточке */
@@ -127,7 +137,7 @@ function MainPage(props) {
   const handleUpdateUser = (data) => {
     setSubmitButtonValues({
       ...submitButtonValues, 
-      editUserInfo: 'Загружается...',
+      editProfile: 'Загружается...',
     })
     api.patchUserInfo(data)
     .then(data => {
@@ -140,7 +150,7 @@ function MainPage(props) {
       console.log(`user info updates`);
       setSubmitButtonValues({
         ...submitButtonValues, 
-        editUserInfo: 'Сохранить',
+        editProfile: 'Сохранить',
       })
       closeAllPopups();
     });
@@ -173,7 +183,7 @@ function MainPage(props) {
   const handleAddCard = (title, link) => {
     setSubmitButtonValues({
       ...submitButtonValues,
-      addCards: "Загружается...",
+      addPlace: "Загружается...",
     });
     api
       .postNewCard(title, link)
@@ -187,7 +197,7 @@ function MainPage(props) {
         console.log(`new card added`);
         setSubmitButtonValues({
           ...submitButtonValues,
-          addCards: "Сохранить",
+          addPlace: "Сохранить",
         });
         closeAllPopups();
       });
@@ -235,7 +245,7 @@ function MainPage(props) {
       />
       <Footer />
       <EditProfilePopup
-        submitValue={submitButtonValues.editUserInfo}
+        submitValue={submitButtonValues.editProfile}
         isOpen={isPopupsOpen.editProfile}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
@@ -247,7 +257,7 @@ function MainPage(props) {
         onUpdateAvatar={handleUpdateAvatar}
       />
       <AddPlacePopup
-        submitValue={submitButtonValues.addCards}
+        submitValue={submitButtonValues.addPlace}
         isOpen={isPopupsOpen.addPlace}
         onClose={closeAllPopups}
         onAddPlace={handleAddCard}
@@ -258,7 +268,7 @@ function MainPage(props) {
         onClose={closeAllPopups}
       />
       <PopupWithForm
-        submitValue={submitButtonValues.confirmDeletion}
+        submitValue={submitButtonValues.deletePlace}
         isOpen={isPopupsOpen.deletePlace}
         onClose={closeAllPopups}
         onDeleteCard={handleCardDelete}

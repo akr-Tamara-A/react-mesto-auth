@@ -4,7 +4,7 @@ import Popup from "./Popup";
 import Form from "./Form";
 import Input from "./Input";
 
-export default function AddPlacePopup({onAddPlace, ...props}) {
+export default function AddPlacePopup({onAddPlace, submitValue, ...props}) {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
 
@@ -33,7 +33,7 @@ export default function AddPlacePopup({onAddPlace, ...props}) {
       <Form
         title="Новое место"
         formClass="popup"
-        submitValue="Сохранить"
+        submitValue={submitValue}
         onSubmit={handleSubmit}
       >
         <Input
