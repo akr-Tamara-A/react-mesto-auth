@@ -48,7 +48,7 @@ export default function Main(props) {
         <ul className="elements__container">
           {props.isCardsLoading 
             ? <Spinner />
-            : props.cards.map((card) => {
+            : props.cards && props.cards.map((card) => {
               return (
                 <Card 
                   card={card} 

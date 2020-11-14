@@ -11,11 +11,8 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return Promise.reject(`${res.status} ${res.statusText}`);
       })
-      .catch((err) => {
-        console.log("Ошибка. Запрос не выполнен: ", err);
-      });
   }
 
   /** получить данные пользователя (GET) */
@@ -25,11 +22,8 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return Promise.reject(`${res.status} ${res.statusText}`);
       })
-      .catch((err) => {
-        console.log("Ошибка. Запрос не выполнен: ", err);
-      });
   }
 
   /** заменить данные пользователя (PATCH) */

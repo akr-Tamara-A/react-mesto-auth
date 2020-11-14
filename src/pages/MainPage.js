@@ -22,7 +22,7 @@ function MainPage(props) {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isCardsLoading, setCardsIsLoading] = useState(false);
+  const [isCardsLoading, setCardsIsLoading] = useState(true);
   const [submitButtonValues, setSubmitButtonValues] = useState({
     editAvatar: 'Сохранить',
     editUserInfo: 'Сохранить',
@@ -40,6 +40,7 @@ function MainPage(props) {
     api
     .getUserInfo()
     .then((data) => {
+      console.log(data);
       setCurrentUser(data);
       console.log(`user info loaded`);
       setCardsIsLoading(true);
@@ -48,6 +49,7 @@ function MainPage(props) {
       .getInitialCards()
       .then((data) => {
         setCards(data);
+        console.log(`cards info loaded`);
       })
     })
     .catch((err) => {
@@ -55,7 +57,6 @@ function MainPage(props) {
     })
     .finally(() => {
       setCardsIsLoading(false);
-      console.log(`cards info loaded`);
         });
     }, [setCurrentUser, setCards]);
   

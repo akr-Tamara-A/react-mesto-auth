@@ -36,4 +36,4 @@ export const checkToken = (token) => {
     }
   })
   .then(res => res.json())
-}
+};
