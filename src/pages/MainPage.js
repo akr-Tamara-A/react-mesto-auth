@@ -40,7 +40,6 @@ function MainPage(props) {
     api
     .getUserInfo()
     .then((data) => {
-      console.log(data);
       setCurrentUser(data);
       console.log(`user info loaded`);
       setCardsIsLoading(true);

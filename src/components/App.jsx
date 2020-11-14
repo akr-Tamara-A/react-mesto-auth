@@ -42,8 +42,12 @@ function App() {
   };
 
   /** Авторизация */
-  const onLogin = () => {
+  const onLogin = (booleen) => {
     tokenCheck();
+    if(!booleen) {
+      setIsOpen(true);
+      setIsSuccess(booleen);
+    }
   }
 
   /** Закрытие попапа */

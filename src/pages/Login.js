@@ -27,12 +27,13 @@ function Login(props) {
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          props.onLogin();
+          props.onLogin(true);
         } else {
           return Promise.reject(res);
         }
       })
       .catch((err) => {
+        props.onLogin(false);
         console.log(err);
       });
   };
