@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import Form from "../components/Form";
 import Input from "../components/Input";
 
-import * as auth from '../Auth.js';
+import * as auth from '../utils/Auth.js';
 
 
 /** Страница авторизации пользователя */

@@ -7,7 +7,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "../hocs/ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 
-import * as auth from '../Auth.js';
+import * as auth from '../utils/Auth.js';
 
 /** Основной компонент страницы */
 function App() {
@@ -27,7 +27,6 @@ function App() {
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      console.log(43);
       auth
         .checkToken(jwt)
         .then((res) => {

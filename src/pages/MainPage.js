@@ -58,7 +58,6 @@ function MainPage(props) {
       setCardsIsLoading(false);
         });
     }, [setCurrentUser, setCards]);
-  
 
   /** Функция закрытия попапов */
   const closeAllPopups = () => {
@@ -76,8 +75,11 @@ function MainPage(props) {
     api.changeLikeCardStatus(currentCard._id, !isLiked).then((newCard) => {
       const newCards = cards.map((card) => card._id === currentCard._id ? newCard : card);
       setCards(newCards);
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  }
+  };
 
   /** Обработка удаления карточки */
   const handleCardDelete = currentCard => {
@@ -90,6 +92,9 @@ function MainPage(props) {
       setCards(newCards);
       console.log('card deleted');
     })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   /** Функция обработки клика по карточке */
