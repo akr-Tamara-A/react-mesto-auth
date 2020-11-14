@@ -93,19 +93,21 @@ function MainPage(props) {
     setIsPopupsOpen({
       ...isPopupsOpen,
       deletePlace: true,
-    })
+    });
+    setSelectedCard(currentCard);
   }
 
   /** Обработка удаления карточки */
-  const handleCardDelete = currentCard => {
+  const handleCardDelete = () => {
+    const currentCard = selectedCard;
     api.deleteCard(currentCard._id)
     .then((res) => {
-      console.log(res);
       const newCards = cards.filter(card => {
         return card._id !== currentCard._id
       });
       setCards(newCards);
       console.log('card deleted');
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
@@ -176,7 +178,6 @@ function MainPage(props) {
     api
       .postNewCard(title, link)
       .then((newCard) => {
-        console.log(newCard);
         setCards([newCard, ...cards]);
       })
       .catch((err) => {
@@ -260,6 +261,7 @@ function MainPage(props) {
         submitValue={submitButtonValues.confirmDeletion}
         isOpen={isPopupsOpen.deletePlace}
         onClose={closeAllPopups}
+        onDeleteCard={handleCardDelete}
       />
     </CurrentUserContext.Provider>
   );
